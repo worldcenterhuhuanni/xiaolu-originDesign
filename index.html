@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>对话</title>
+  </head>
+  <body>
+    <canvas id="bg" aria-hidden="true"></canvas>
+
+    <header id="top">
+      <button class="newbtn" id="new-btn" title="新会话"><b>＋</b>新会话</button>
+      <nav id="shelf" aria-label="会话">
+        <div id="shelf-row"></div>
+        <div id="wall" aria-label="全部会话"></div>
+      </nav>
+      <span class="grow"></span>
+      <button id="export-btn" title="把当前支线导出为 Markdown">导出</button>
+      <button id="search-btn" title="搜索所有会话的问题与回答">搜索 <kbd>⌘K</kbd></button>
+    </header>
+
+    <main id="stage"></main>
+    <nav id="rail" aria-label="本会话时间轴"></nav>
+
+    <form id="composer">
+      <div id="quick" aria-label="快捷追问"></div>
+      <ul id="menu" role="listbox" hidden></ul>
+      <div class="box">
+        <div id="chips"></div>
+        <textarea id="q" rows="1" placeholder="问点什么…   @ 引用之前的对话 · / 命令 · 可拖入或粘贴文件" aria-label="提问"></textarea>
+        <div class="bar">
+          <button type="button" id="mode"></button>
+          <span class="grow"></span>
+          <button type="button" class="ib" id="attach" title="添加文件（也可以直接拖进窗口或粘贴）" aria-label="添加文件"><svg viewBox="0 0 24 24"><path d="M20 11.5 12.5 19a5 5 0 0 1-7-7L13 4.5a3.3 3.3 0 0 1 4.7 4.7L10.2 16.7a1.7 1.7 0 0 1-2.4-2.4L14.5 7.6" /></svg></button>
+          <button type="button" class="ib" id="at" title="引用之前的某一轮（@）" aria-label="引用之前的对话">@</button>
+          <button type="button" class="ib" id="slash" title="命令（/）" aria-label="命令">/</button>
+          <button type="button" class="ib" id="mic" title="语音输入" aria-label="语音输入" hidden><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg></button>
+          <button id="send" aria-label="发送"><svg class="go" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" /></svg><svg class="halt" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2" /></svg></button>
+        </div>
+      </div>
+      <input type="file" id="file" multiple hidden />
+    </form>
+
+    <dialog id="palette" aria-label="搜索">
+      <input id="pq" placeholder="搜索所有会话里的问题和回答，或输入会话名…" autocomplete="off" />
+      <ul id="pr" role="listbox"></ul>
+    </dialog>
+    <div id="toast" role="status"></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
