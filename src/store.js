@@ -15,8 +15,8 @@ export const THEMES = [
 ]
 
 // groups：用户自己建的分组 [{ id, name, theme }]，数量不限；会话用 s.group 指向它，null = 未分组。
-// 会话的水色跟着分组走（未分组的用自己的 s.theme）。folded 记录折叠了哪些分组，axes 记录全部会话视图开着哪两个维度
-export const state = load() ?? { sessions: [], current: null, groups: [], folded: [], axes: { g: true, t: true } }
+// 会话的水色跟着分组走（未分组的用自己的 s.theme）。
+export const state = load() ?? { sessions: [], current: null, groups: [] }
 export const groupOf = (s) => state.groups.find((g) => g.id === s.group)
 export const themeOf = (s) => THEMES[groupOf(s)?.theme ?? s.theme] ?? THEMES[0]
 export const uid = () => Math.random().toString(36).slice(2, 10)
@@ -39,10 +39,7 @@ function load() {
       const names = s.groups ?? {}
       s.groups = [...new Set(s.sessions.map((x) => x.theme))].map((i) => ({ id: `g${i}`, name: names[i] || THEMES[i].name, theme: i }))
       s.sessions.forEach((x) => (x.group = `g${x.theme}`))
-      s.folded = []
     }
-    s.folded ??= []
-    s.axes ??= { g: true, t: true }
     return s
   } catch {
     return null
@@ -103,7 +100,6 @@ export function removeGroup(id) {
   const g = state.groups.find((x) => x.id === id)
   state.sessions.forEach((s) => s.group === id && Object.assign(s, { group: null, theme: g.theme }))
   state.groups = state.groups.filter((x) => x.id !== id)
-  state.folded = state.folded.filter((x) => x !== id)
 }
 
 /** 派生：整个会话（含所有支流）复制一份，从副本上继续，原会话不动。 */
