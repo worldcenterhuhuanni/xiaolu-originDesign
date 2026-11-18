@@ -28,6 +28,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 svg { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 #bg { position: fixed; inset: 0; width: 100%; height: 100%; }
+/* 鲸鱼场景：鲸群画在这层 2D 画布上，夹在背景和舞台之间（见 whale.js） */
+#whale { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 .grow { flex: 1; }
 .chip {
   display: inline-flex; align-items: center; gap: 6px; max-width: 24em; padding: 3px 10px;

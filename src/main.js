@@ -15,6 +15,7 @@ import { initPalette, openPalette } from './palette.js'
 const $ = (id) => document.getElementById(id)
 const $q = $('q'), $toast = $('toast'), $stage = $('stage'), $send = $('send')
 const bg = createBg($('bg'))
+if (import.meta.env.DEV) window.bg = bg // 调试用：控制台里 bg.energy = 1、bg.setEffect('vortex')、bg.setScene('stars') 直接看背景
 const live = new Map() // turnId → { ctl, turn }：正在生成的轮次，可以同时有多条支流、多个会话在生成
 
 if (!state.sessions.length) seed()
@@ -284,6 +285,8 @@ composer.init({
     { name: '新会话', hint: '在当前分组里开一个新会话', run: () => createSession() },
     { name: '搜索', hint: '跨所有会话搜问题和回答 · ⌘K', run: openPalette },
     { name: '全部会话', hint: '按分组和时间铺开所有会话 · Esc', run: () => openWall(true) },
+    { name: '背景', hint: '切换背景场景：河流 / 星空 / 鲸鱼', run: () => toast(`背景：${bg.setScene()}`) },
+    { name: '特效', hint: '切换 AI 回答时的背景特效：环绕 / 漩涡', run: () => toast(`回答特效：${bg.setEffect()}`) },
     { name: '专注', hint: '专注阅读当前这轮 · F', run: () => focusMode() },
     { name: '导出', hint: '把当前支线导出为 Markdown', run: exportSession },
     { name: '回到最新', hint: '跳到这条支线的最后一轮', run: toLatest },
